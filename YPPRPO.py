@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication,
     QPushButton,
@@ -8,7 +9,8 @@ from PyQt5.QtWidgets import (
     QWidget,
     QLabel,
     QTableWidgetItem,
-    QTableWidget, QSlider,
+    QTableWidget,
+    QSlider,
 )
 from widgets import LineCanvas, ImageCanvas, Table
 
@@ -20,17 +22,25 @@ class Window(QWidget):
         super().__init__()
         self.setWindowTitle("Center of mass of the drop")
 
-        # Create a QVBoxLayout instance
         layout = QVBoxLayout()
         line_layout = QHBoxLayout()
-        buttons_layot =  QHBoxLayout()
+        buttons_layot = QHBoxLayout()
 
-        # Add widgets to the layout
+        self.slider_label = QLabel("0")
+        self.slider_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.slider_label)
+
         button1 = QPushButton("Предыдущее изображение")
         button2 = QPushButton("Следующее изображение")
         lineCanvas = LineCanvas(self)
         imgCanvas = ImageCanvas(self)
 
+        slider = QSlider()
+        slider.setOrientation(Qt.Horizontal)
+        slider.setRange(0, 400)
+        slider.setValue(200)
+        slider.setTickInterval(1)
+        slider.setTickPosition(QSlider.TicksBelow)
 
         def button3_clicked():
             global counter
@@ -48,6 +58,7 @@ class Window(QWidget):
             imgCanvas.draw_next_image()
             table.show_row(imgCanvas.current_image_idx)
 
+
         table = Table('koord.csv', imgCanvas.current_image_idx)
         table.show()
         button3 = QPushButton("Включить режим контура капли")
@@ -55,12 +66,15 @@ class Window(QWidget):
         button1.clicked.connect(button1_clicked)
         button2.clicked.connect(button2_clicked)
 
+        label = QLabel(str(slider.value()))
+        slider.valueChanged.connect(lambda value: label.setText(str(value)))
 
-        line_layout.addWidget(lineCanvas)
-
+        line_slider_layot=QtWidgets.QVBoxLayout()
+        line_slider_layot.addWidget(lineCanvas)
+        line_slider_layot.addWidget(slider)
         img_layout = QtWidgets.QVBoxLayout()
         img_layout.addWidget(imgCanvas)
-        img_layout.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)  # Center the image vertically and horizontally
+        img_layout.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         img_table_layout = QtWidgets.QHBoxLayout()
         img_table_layout.addStretch()
         table.setFixedWidth(475)
@@ -68,10 +82,10 @@ class Window(QWidget):
         img_table_layout.addStretch()
         img_layout.addLayout(img_table_layout)
 
+        line_layout.addLayout(line_slider_layot)
         line_layout.addLayout(img_layout)
         layout.addLayout(line_layout)
 
-        # Add the two QHBoxLayouts to the main QHBoxLayout
         line_layout.addLayout(img_table_layout)
         layout.addLayout(line_layout)
 
@@ -81,11 +95,11 @@ class Window(QWidget):
         layout.addLayout(buttons_layot)
         layout.addWidget(button3)
 
-        # Set the layout on the application's window
         self.setLayout(layout)
 
 
 if __name__ == "__main__":
+    folder_path = "exp1"
     app = QApplication(sys.argv)
     window = Window()
     window.show()

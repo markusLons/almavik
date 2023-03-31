@@ -6,15 +6,16 @@ import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QHBoxLayout
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
+from PyQt5 import QtWidgets
 
 
 class MplCanvas(FigureCanvasQTAgg):
     def __init__(self, parent=None, width=7, height=7, dpi=100):
-        self.fig = Figure(figsize=(width, height),dpi=dpi)
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
         super(MplCanvas, self).__init__(self.fig)
         self.axes = self.fig.add_subplot(1, 1, 1)
-        # self.axes.set_aspect('equal')
         self.fig.tight_layout()
+
     def update_canvas(self):
         self.fig.canvas.draw()
 
@@ -23,10 +24,10 @@ class LineCanvas(MplCanvas):
     def __init__(self, parent=None, width=7, height=7, dpi=100):
         super().__init__()
         self.line = None
+
     def draw_random_line(self):
         if self.line is None:
-            self.line, = self.axes.plot(np.arange(100), np.random.rand(100), 
-                                        linewidth=.8, color="red", marker='s')
+            self.line, = self.axes.plot(np.arange(100), np.random.rand(100), linewidth=.8, color="red", marker='s')
         self.line.set_ydata(np.random.rand(100))
         self.update_canvas()
 
@@ -56,14 +57,14 @@ class ImageCanvas(MplCanvas):
 
     def draw_next_image(self):
         image_paths = self.get_image_paths()
-        if (self.current_image_idx % (len(image_paths)-1)!=0 or self.current_image_idx!=len(image_paths)-1):
+        if (self.current_image_idx % (len(image_paths) - 1) != 0 or self.current_image_idx != len(image_paths) - 1):
             self.current_image_idx = (self.current_image_idx + 1) % len(image_paths)
         image_path = image_paths[self.current_image_idx]
         self.load_image(image_path)
 
     def draw_previous_image(self):
         image_paths = self.get_image_paths()
-        if ((self.current_image_idx) % len(image_paths)!=0):
+        if ((self.current_image_idx) % len(image_paths) != 0):
             self.current_image_idx = (self.current_image_idx - 1) % len(image_paths)
         image_path = image_paths[self.current_image_idx]
         self.load_image(image_path)
@@ -105,12 +106,12 @@ class Table(QWidget):
                 self.table.setItem(row_idx, col_idx, item)
 
     def numbers_of_rows(self):
-        row_indices=[]
-        if self.index==0:
-            row_indices.extend([0,1,2])
+        row_indices = []
+        if self.index == 0:
+            row_indices.extend([0, 1, 2])
         else:
-            if self.index==len(self.data)-1:
-                row_indices.extend([self.index-2, self.index-1, self.index])
+            if self.index == len(self.data) - 1:
+                row_indices.extend([self.index - 2, self.index - 1, self.index])
             else:
-                row_indices.extend([self.index-1, self.index, self.index+1])
+                row_indices.extend([self.index - 1, self.index, self.index + 1])
         return row_indices
