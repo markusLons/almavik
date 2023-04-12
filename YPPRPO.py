@@ -13,11 +13,13 @@ from PyQt5.QtWidgets import (
     QSlider,
 )
 from widgets import LineCanvas, ImageCanvas, Table
+from detectorDrop import detectorDrop
 
 counter = 0
 
 class Window(QWidget):
-    def __init__(self):
+    def __init__(self, det):
+        self.det = det
         super().__init__()
         self.setWindowTitle("Center of mass of the drop")
 
@@ -31,11 +33,13 @@ class Window(QWidget):
 
         button1 = QPushButton("Предыдущее изображение")
         button2 = QPushButton("Следующее изображение")
-        lineCanvas = LineCanvas(self)
-        imgCanvas = ImageCanvas(self)
+        imgCanvas = ImageCanvas(det_ = det)
+        lineCanvas = LineCanvas(det_=det, current_image_idx=imgCanvas.current_image_idx)
 
         def slider_value_changed():
             table.show_row(imgCanvas.current_image_idx)
+            lineCanvas.current_image = slider.value()
+            lineCanvas.draw_line()
 
         slider = QSlider()
         slider.setOrientation(Qt.Horizontal)
@@ -46,26 +50,35 @@ class Window(QWidget):
         slider.valueChanged.connect(imgCanvas.update_image_from_slider)
         slider.valueChanged.connect(slider_value_changed)
 
+
         def button3_clicked():
             global counter
             counter += 1
             if counter % 2 == 1:
-                imgCanvas.folder_path= "exp2"
+                imgCanvas.contour_or_not=1
+                button3.setText("Выключить режим контура капли")
             else:
-                imgCanvas.folder_path= "exp1"
+                imgCanvas.contour_or_not=0
+                button3.setText("Включить режим контура капли")
 
         def button1_clicked():
             imgCanvas.draw_previous_image()
+            lineCanvas.current_image=imgCanvas.current_image_idx
             table.show_row(imgCanvas.current_image_idx)
             slider.setValue(imgCanvas.current_image_idx)
+            lineCanvas.draw_line()
 
         def button2_clicked():
             imgCanvas.draw_next_image()
+            lineCanvas.current_image = imgCanvas.current_image_idx
             table.show_row(imgCanvas.current_image_idx)
             slider.setValue(imgCanvas.current_image_idx)
+            lineCanvas.draw_line()
 
-        table = Table('koord.csv', imgCanvas.current_image_idx)
+        lineCanvas.draw_line()
+        table = Table(imgCanvas.current_image_idx, det)
         table.show()
+
         button3 = QPushButton("Включить режим контура капли")
         button3.clicked.connect(button3_clicked)
         button1.clicked.connect(button1_clicked)
@@ -105,7 +118,8 @@ class Window(QWidget):
 
 if __name__ == "__main__":
     folder_path = "exp1"
+    det =detectorDrop(folder_path)
     app = QApplication(sys.argv)
-    window = Window()
+    window = Window(det)
     window.show()
     sys.exit(app.exec_())

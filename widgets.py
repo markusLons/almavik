@@ -21,71 +21,80 @@ class MplCanvas(FigureCanvasQTAgg):
 
 
 class LineCanvas(MplCanvas):
-    def __init__(self, parent=None, width=7, height=7, dpi=100):
+    def __init__(self, det_=None, current_image_idx=0, parent=None, width=7, height=7, dpi=100):
         super().__init__()
         self.line = None
+        self.data = [list(row) for row in det_.center_mass]
+        self.current_image=current_image_idx
 
-    def draw_random_line(self):
-        if self.line is None:
-            self.line, = self.axes.plot(np.arange(100), np.random.rand(100), linewidth=.8, color="red", marker='s')
-        self.line.set_ydata(np.random.rand(100))
+    def draw_line(self):
+        self.axes.clear()
+
+        start_idx = max(self.current_image - 5, 0)
+        end_idx = min(self.current_image + 5, len(self.data))
+
+        data_to_plot = self.data[start_idx:end_idx]
+        x_data = [row[1] for row in data_to_plot]
+        y_data = [row[2] for row in data_to_plot]
+
+        # Рисуем все точки черными кружками
+        self.axes.plot(x_data, y_data, color='black', linestyle='solid', marker='o')
+
+        # Рисуем текущую точку красным кружком
+        current_point = data_to_plot[self.current_image - start_idx]
+        self.axes.plot(current_point[1], current_point[2], color='red', linestyle='solid', marker='o')
+
+        self.axes.set_xlim(min(x_data)-10, max(x_data)+10)
+        self.axes.set_ylim(min(y_data)-10, max(y_data)+10)
+
         self.update_canvas()
 
 
+
 class ImageCanvas(MplCanvas):
-    def __init__(self, parent=None, width=7, height=7, dpi=100):
+    def __init__(self, det_=None, parent=None, width=7, height=7, dpi=100):
         super().__init__()
         self.img = None
         self.axes.axis("off")
         self.current_image_idx = 0
-        self.folder_path = "exp1"
-        self.image_paths = self.get_image_paths()
-        self.load_image(self.image_paths[self.current_image_idx])
+        self.contour_or_not=0
+        self.img_without_contour = det_.img
+        self.img_with_contour = det_.img_contour
 
-    def get_image_paths(self):
-        image_extensions = [".jpg", ".jpeg", ".png"]
-        image_paths = []
-        for file_name in os.listdir(self.folder_path):
-            if os.path.splitext(file_name)[1].lower() in image_extensions:
-                image_paths.append(os.path.join(self.folder_path, file_name))
-        return image_paths
+        self.image_paths = [f"Image {i}" for i in range(len(self.img_without_contour))]
+        self.load_image()
 
-    def load_image(self, image_path):
-        image = plt.imread(image_path)
+    def load_image(self):
+        if self.contour_or_not == 0:
+            image = self.img_without_contour[self.current_image_idx]
+        else:
+            image = self.img_with_contour[self.current_image_idx]
+
         self.img = self.axes.imshow(image, cmap="gray")
         self.update_canvas()
 
     def draw_next_image(self):
-        image_paths = self.get_image_paths()
-        if (self.current_image_idx % (len(image_paths) - 1) != 0 or self.current_image_idx != len(image_paths) - 1):
-            self.current_image_idx = (self.current_image_idx + 1) % len(image_paths)
-        image_path = image_paths[self.current_image_idx]
-        self.load_image(image_path)
+        if self.current_image_idx < len(self.image_paths) - 1:
+            self.current_image_idx += 1
+            self.load_image()
 
     def draw_previous_image(self):
-        image_paths = self.get_image_paths()
-        if ((self.current_image_idx) % len(image_paths) != 0):
-            self.current_image_idx = (self.current_image_idx - 1) % len(image_paths)
-        image_path = image_paths[self.current_image_idx]
-        self.load_image(image_path)
+        if self.current_image_idx > 0:
+            self.current_image_idx -= 1
+            self.load_image()
 
     def update_image_from_slider(self, value):
         max_slider_value = 401
         image_index = int(value * len(self.image_paths) / max_slider_value)
         self.current_image_idx = image_index
-        image_path = self.image_paths[self.current_image_idx]
-        self.load_image(image_path)
+        self.load_image()
 
 
 class Table(QWidget):
-    def __init__(self, filename, current_image_idx):
+    def __init__(self, current_image_idx, det):
         super().__init__()
-        self.data = []
-        with open(filename) as f:
-            reader = csv.reader(f)
-            for row in reader:
-                self.data.append(row)
 
+        self.data = [list(row) for row in det.center_mass]
         self.table = QTableWidget()
         self.table.setColumnCount(len(self.data[0]))
         self.table.setRowCount(3)
@@ -94,7 +103,7 @@ class Table(QWidget):
 
         for i in range(len(self.data)):
             for j in range(len(self.data[i])):
-                item = QTableWidgetItem(self.data[i][j])
+                item = QTableWidgetItem(str(self.data[i][j]))
                 self.table.setItem(i, j, item)
 
         layout = QHBoxLayout()
@@ -109,7 +118,7 @@ class Table(QWidget):
         row_indices = self.numbers_of_rows()
         for row_idx, data_idx in enumerate(row_indices):
             for col_idx in range(len(self.data[data_idx])):
-                item = QTableWidgetItem(self.data[data_idx][col_idx])
+                item = QTableWidgetItem(str(self.data[data_idx][col_idx]))
                 self.table.setItem(row_idx, col_idx, item)
 
     def numbers_of_rows(self):
