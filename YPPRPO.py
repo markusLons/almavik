@@ -14,7 +14,6 @@ from PyQt5.QtWidgets import (
 )
 from widgets import LineCanvas, ImageCanvas, Table
 
-import os
 counter = 0
 
 class Window(QWidget):
@@ -35,12 +34,17 @@ class Window(QWidget):
         lineCanvas = LineCanvas(self)
         imgCanvas = ImageCanvas(self)
 
+        def slider_value_changed():
+            table.show_row(imgCanvas.current_image_idx)
+
         slider = QSlider()
         slider.setOrientation(Qt.Horizontal)
-        slider.setRange(0, 400)
-        slider.setValue(200)
+        slider.setRange(0, 401)
+        slider.setValue(0)
         slider.setTickInterval(1)
         slider.setTickPosition(QSlider.TicksBelow)
+        slider.valueChanged.connect(imgCanvas.update_image_from_slider)
+        slider.valueChanged.connect(slider_value_changed)
 
         def button3_clicked():
             global counter
@@ -53,11 +57,12 @@ class Window(QWidget):
         def button1_clicked():
             imgCanvas.draw_previous_image()
             table.show_row(imgCanvas.current_image_idx)
+            slider.setValue(imgCanvas.current_image_idx)
 
         def button2_clicked():
             imgCanvas.draw_next_image()
             table.show_row(imgCanvas.current_image_idx)
-
+            slider.setValue(imgCanvas.current_image_idx)
 
         table = Table('koord.csv', imgCanvas.current_image_idx)
         table.show()

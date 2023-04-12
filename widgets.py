@@ -69,6 +69,13 @@ class ImageCanvas(MplCanvas):
         image_path = image_paths[self.current_image_idx]
         self.load_image(image_path)
 
+    def update_image_from_slider(self, value):
+        max_slider_value = 401
+        image_index = int(value * len(self.image_paths) / max_slider_value)
+        self.current_image_idx = image_index
+        image_path = self.image_paths[self.current_image_idx]
+        self.load_image(image_path)
+
 
 class Table(QWidget):
     def __init__(self, filename, current_image_idx):
