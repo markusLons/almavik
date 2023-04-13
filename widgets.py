@@ -37,15 +37,17 @@ class LineCanvas(MplCanvas):
         x_data = [row[1] for row in data_to_plot]
         y_data = [row[2] for row in data_to_plot]
 
-        # Рисуем все точки черными кружками
         self.axes.plot(x_data, y_data, color='black', linestyle='solid', marker='o')
 
-        # Рисуем текущую точку красным кружком
         current_point = data_to_plot[self.current_image - start_idx]
         self.axes.plot(current_point[1], current_point[2], color='red', linestyle='solid', marker='o')
 
         self.axes.set_xlim(min(x_data)-10, max(x_data)+10)
         self.axes.set_ylim(min(y_data)-10, max(y_data)+10)
+
+        self.update_canvas()
+
+
 
         self.update_canvas()
 
@@ -70,8 +72,12 @@ class ImageCanvas(MplCanvas):
         else:
             image = self.img_with_contour[self.current_image_idx]
 
-        self.img = self.axes.imshow(image, cmap="gray")
-        self.update_canvas()
+        if self.img is None:
+            self.img = self.axes.imshow(image, cmap="gray")
+        else:
+            self.img.set_data(image)
+            self.axes.draw_artist(self.img)
+            self.fig.canvas.blit(self.axes.bbox)
 
     def draw_next_image(self):
         if self.current_image_idx < len(self.image_paths) - 1:
