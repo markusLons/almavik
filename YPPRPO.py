@@ -43,7 +43,7 @@ class Window(QWidget):
 
         slider = QSlider()
         slider.setOrientation(Qt.Horizontal)
-        slider.setRange(0, 401)
+        slider.setRange(0, 400)
         slider.setValue(0)
         slider.setTickInterval(1)
         slider.setTickPosition(QSlider.TicksBelow)

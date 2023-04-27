@@ -4,9 +4,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QHBoxLayout
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-from PyQt5 import QtWidgets
 
 
 class MplCanvas(FigureCanvasQTAgg):
@@ -48,11 +47,6 @@ class LineCanvas(MplCanvas):
         self.update_canvas()
 
 
-
-        self.update_canvas()
-
-
-
 class ImageCanvas(MplCanvas):
     def __init__(self, det_=None, parent=None, width=7, height=7, dpi=100):
         super().__init__()
@@ -90,7 +84,8 @@ class ImageCanvas(MplCanvas):
             self.load_image()
 
     def update_image_from_slider(self, value):
-        max_slider_value = 401
+        value = value % 400
+        max_slider_value = len(self.img_without_contour)-1
         image_index = int(value * len(self.image_paths) / max_slider_value)
         self.current_image_idx = image_index
         self.load_image()
