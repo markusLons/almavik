@@ -3,12 +3,26 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-class detectorDrop:
 
-    center_mass = []
-    img = []
-    img_contour = []
+class detectorDrop:
+    # Initialize class variables
+    center_mass = []  # Stores the center of mass for each image
+    img = []  # Stores the original images
+    img_contour = []  # Stores the images with contours
+
     def shaded_contours(self, zeroes, min_area=0, max_area=10000):
+        """
+        Applies image processing techniques to find shaded contours within a given area range.
+
+        Args:
+            zeroes: The input image (numpy array) with all pixels set to zero.
+            min_area: The minimum contour area to consider.
+            max_area: The maximum contour area to consider.
+
+        Returns:
+            shaded: The image with shaded contours.
+
+        """
         # Convert the input image to 8-bit grayscale
         gray = cv2.cvtColor(np.uint8(zeroes), cv2.COLOR_BGR2GRAY)
         # Apply Gaussian blurring to remove noise
@@ -41,12 +55,21 @@ class detectorDrop:
         return shaded
 
     def __init__(self, img_path):
+        """
+        Initializes the detectorDrop class with the given image path.
+
+        Args:
+            img_path: The path to the directory containing the input images.
+
+        """
         MIN_AREA = 7000
         MAX_AREA = 25000
         list_photos = []
 
+        # Read all images in the specified directory
         for file_name in os.listdir(img_path):
             list_photos.append(cv2.imread(os.path.join(img_path, file_name), cv2.IMREAD_COLOR))
+
         number_photo = 0
         for img in list_photos:
             # Convert the image to grayscale
@@ -77,7 +100,7 @@ class detectorDrop:
             new_img = self.shaded_contours(zeroes, MIN_AREA, MAX_AREA)
 
             # Apply Gaussian blurring to remove noise
-            new_img = cv2.GaussianBlur(new_img, (7,7), 0)
+            new_img = cv2.GaussianBlur(new_img, (7, 7), 0)
 
             # Convert the image to grayscale
             gray_img = cv2.cvtColor(new_img.astype(np.uint8), cv2.COLOR_BGR2GRAY)
@@ -94,12 +117,12 @@ class detectorDrop:
             else:
                 cX, cY = 0, 0
 
-            # Print the center of mass
-            self.center_mass.append((number_photo,cX, cY))
+            # Store the center of mass
+            self.center_mass.append((number_photo, cX, cY))
             number_photo += 1
             self.img.append(img)
             self.img_contour.append(new_img)
             print("Center of mass: ({}, {})".format(cX, cY))
 
-            #plt.imshow(new_img)
-            #plt.show()
+            # plt.imshow(new_img)
+            # plt.show()
