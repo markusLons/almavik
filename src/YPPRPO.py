@@ -130,7 +130,7 @@ class Window(QWidget):
 
 
 def main():
-    folder_path = "exp1"
+    folder_path = "../exp1"
     det = detectorDrop(folder_path)
     app = QApplication(sys.argv)
     window = Window(det)
