@@ -129,10 +129,14 @@ class Window(QWidget):
         self.setLayout(layout)
 
 
-if __name__ == "__main__":
+def main():
     folder_path = "exp1"
     det = detectorDrop(folder_path)
     app = QApplication(sys.argv)
     window = Window(det)
     window.show()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()
+
