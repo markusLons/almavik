@@ -129,8 +129,7 @@ class Window(QWidget):
         self.setLayout(layout)
 
 
-def main():
-    folder_path = "../exp1"
+def main(folder_path = "../exp1"):
     det = detectorDrop(folder_path)
     app = QApplication(sys.argv)
     window = Window(det)
