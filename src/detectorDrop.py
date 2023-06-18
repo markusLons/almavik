@@ -68,7 +68,8 @@ class detectorDrop:
 
         # Read all images in the specified directory
         for file_name in os.listdir(img_path):
-            list_photos.append(cv2.imread(os.path.join(img_path, file_name), cv2.IMREAD_COLOR))
+            if file_name.lower().endswith(".jpeg"):
+                list_photos.append(cv2.imread(os.path.join(img_path, file_name), cv2.IMREAD_COLOR))
 
         number_photo = 0
         for img in list_photos:
