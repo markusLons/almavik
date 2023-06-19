@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - exe
+      - exe  # Добавлена ветка "exe"
   pull_request:
     branches:
       - main
-      - exe
+      - exe  # Добавлена ветка "exe"
 
 permissions:
   contents: read
@@ -34,24 +34,47 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Lint with flake8
         run: |
+          # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run PyInstaller
         run: |
           python -m PyInstaller -w --onefile src/YPPRPO.py --name "almavik"
-      - name: Upload Release Asset
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: almavik
           path: "dist/almavik.exe"
+      - name: Generate Unique Tag Name
+        id: generate_tag_name
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: releases } = await github.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const tagPrefix = 'release-';
+            const tagNumbers = releases.map((release) => {
+              const tagName = release.tag_name;
+              if (tagName.startsWith(tagPrefix)) {
+                return parseInt(tagName.replace(tagPrefix, ''), 10);
+              }
+              return 0;
+            });
+            const latestTagNumber = Math.max(...tagNumbers);
+            const newTagNumber = latestTagNumber === 0 ? 1 : latestTagNumber + 1;
+            const newTagName = `${tagPrefix}${newTagNumber}`;
+            console.log(`::set-output name=tag_name::${newTagName}`);
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.AAA }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "test"
-          release_name: "test"
+          tag_name: ${{ steps.generate_tag_name.outputs.tag_name }}
+          release_name: "Release ${{ steps.generate_tag_name.outputs.tag_name }}"
           body: |
             Release windows version
           draft: false
@@ -60,9 +83,9 @@ jobs:
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.AAA }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: "dist/almavik.exe"
           asset_name: "almavik.exe"
-          asset_content_type: application/octet-stream
+          asset_content_type: application/zip
