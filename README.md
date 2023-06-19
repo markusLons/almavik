@@ -16,3 +16,7 @@
 ## Использование
 
 ### Установка
+
+## Ссылки
+https://pypi.org/project/almavik/
+https://hub.docker.com/repository/docker/markuslons/almavik
