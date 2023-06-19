@@ -1,6 +1,7 @@
 import pytest
 from PyQt5.QtWidgets import QApplication
 import sys
+from PyQt5.QtWidgets import QWidget
 
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
