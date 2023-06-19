@@ -28,7 +28,7 @@ class TestCanvas(unittest.TestCase):
 class TestLineCanvas(unittest.TestCase):
     def setUp(self):
         self.app = QApplication([])
-        self.det_ = None  
+        self.det_ = 0  
         self.canvas = LineCanvas(self.det_)
 
     def test_draw_line(self):
@@ -38,7 +38,7 @@ class TestLineCanvas(unittest.TestCase):
 class TestImageCanvas(unittest.TestCase):
     def setUp(self):
         self.app = QApplication([])
-        self.det_ = None  
+        self.det_ = 0 
         self.canvas = ImageCanvas(self.det_)
 
     def test_load_image(self):
@@ -61,7 +61,7 @@ class TestImageCanvas(unittest.TestCase):
 class TestTable(unittest.TestCase):
     def setUp(self):
         self.current_image_idx = 0  # Replace with your own test value
-        self.det = None  
+        self.det = 0  
         self.table = Table(self.current_image_idx, self.det)
 
     def test_show_row(self):
