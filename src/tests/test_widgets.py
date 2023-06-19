@@ -1,4 +1,3 @@
-"""
 import sys
 from PyQt5.QtWidgets import QWidget
 import unittest
@@ -7,61 +6,71 @@ from PyQt5.QtWidgets import QApplication
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 
-class TestMplCanvas(unittest.TestCase):
+from matplotlib.figure import Figure
+import numpy as np
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+
+
+class TestCanvas(unittest.TestCase):
+    def setUp(self):
+        self.app = QApplication([])
+        self.canvas = MplCanvas()
+
+    def test_canvas_initialization(self):
+        self.assertIsInstance(self.canvas.fig, Figure)
+        self.assertIsInstance(self.canvas, FigureCanvasQTAgg)
+        self.assertIsNotNone(self.canvas.axes)
 
     def test_update_canvas(self):
-        app = QApplication([])
-        canvas = MplCanvas()
-        canvas.update_canvas()
-        # Check if the canvas is updated successfully
-        self.assertTrue(True)
+        self.canvas.update_canvas()
+        # Assert that the canvas was updated successfully
 
 class TestLineCanvas(unittest.TestCase):
+    def setUp(self):
+        self.app = QApplication([])
+        self.det_ = None  
+        self.canvas = LineCanvas(self.det_)
 
     def test_draw_line(self):
-        app = QApplication([])
-        canvas = LineCanvas()
-        canvas.draw_line()
-        # Check if the line is drawn successfully
-        self.assertTrue(True)
+        self.canvas.draw_line()
+        # Assert that the line was drawn successfully
 
 class TestImageCanvas(unittest.TestCase):
+    def setUp(self):
+        self.app = QApplication([])
+        self.det_ = None  
+        self.canvas = ImageCanvas(self.det_)
 
     def test_load_image(self):
-        app = QApplication([])
-        canvas = ImageCanvas()
-        canvas.load_image()
-        # Check if the image is loaded successfully
-        self.assertTrue(True)
+        self.canvas.load_image()
+        # Assert that the image was loaded successfully
+
+    def test_draw_next_image(self):
+        self.canvas.draw_next_image()
+        # Assert that the next image was loaded successfully
+
+    def test_draw_previous_image(self):
+        self.canvas.draw_previous_image()
+        # Assert that the previous image was loaded successfully
+
+    def test_update_image_from_slider(self):
+        value = 50  # Replace with your own test value
+        self.canvas.update_image_from_slider(value)
+        # Assert that the image was updated successfully
 
 class TestTable(unittest.TestCase):
+    def setUp(self):
+        self.current_image_idx = 0  # Replace with your own test value
+        self.det = None  
+        self.table = Table(self.current_image_idx, self.det)
 
     def test_show_row(self):
-        app = QApplication([])
-        table = Table(0, None)
-        table.show_row(0)
-        # Check if the rows are shown correctly
-        self.assertTrue(True)
+        self.table.show_row(self.current_image_idx)
+        # Assert that the correct rows were shown in the table
 
-if __name__ == '__main__':
-    unittest.main()
-"""
-
-import unittest
-
-class AlwaysPassingTests(unittest.TestCase):
-
-    def test_always_passing_1(self):
-        # Утверждение, которое всегда будет истинным
-        self.assertTrue(True)
-
-    def test_always_passing_2(self):
-        # Утверждение, которое всегда будет истинным
-        self.assertTrue(1 + 1 == 2)
-
-    def test_always_passing_3(self):
-        # Утверждение, которое всегда будет истинным
-        self.assertTrue(len("Hello, World!") == 13)
+    def test_numbers_of_rows(self):
+        row_indices = self.table.numbers_of_rows()
+        # Assert that the correct row indices were returned
 
 if __name__ == '__main__':
     unittest.main()
