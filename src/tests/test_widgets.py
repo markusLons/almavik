@@ -7,6 +7,7 @@ from unittest.mock import MagicMock
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 
+
 class TestMplCanvas(unittest.TestCase):
 
     def test_update_canvas(self):
@@ -32,7 +33,9 @@ class TestLineCanvas(unittest.TestCase):
 
         canvas.axes.clear.assert_called_once()
         canvas.update_canvas.assert_called_once()
-"""
+
+
+from unittest.mock import patch
 
 class TestImageCanvas(unittest.TestCase):
 
@@ -47,28 +50,6 @@ class TestImageCanvas(unittest.TestCase):
         self.assertEqual(canvas.img.get_array().tolist(), det_mock.img[0])
 
 
-    def test_draw_next_image(self):
-        det_mock = MagicMock()
-        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
-
-        canvas = ImageCanvas(det_=det_mock)
-        canvas.load_image = MagicMock()
-
-        canvas.draw_next_image()
-
-        canvas.load_image.assert_called_once()
-
-    def test_draw_previous_image(self):
-        det_mock = MagicMock()
-        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
-
-        canvas = ImageCanvas(det_=det_mock)
-        canvas.load_image = MagicMock()
-
-        canvas.draw_previous_image()
-
-        canvas.load_image.assert_called_once()
-"""
 from unittest.mock import MagicMock, call
 
 
@@ -103,4 +84,5 @@ class TestTable(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
 
