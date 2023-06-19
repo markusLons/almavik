@@ -2,6 +2,9 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+
+sys.path.insert(1, 'src/')
 from src.detectorDrop import detectorDrop
 
 import pkg_resources
