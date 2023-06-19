@@ -9,14 +9,13 @@ import sys
 sys.path.insert(1, 'src/')
 from YPPRPO import Window, detectorDrop
 
-import pkg_resources
-
-file_path = pkg_resources.resource_filename("almavik", "exp1")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+exp1_dir = os.path.join(current_dir, '../exp1')
 
 @fixture
 def window(qtbot):
     app = QApplication(sys.argv)
-    det = detectorDrop(file_path)
+    det = detectorDrop(exp1_dir)
     window = Window(det)
     window.show()
     qtbot.addWidget(window)
