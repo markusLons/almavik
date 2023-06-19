@@ -130,7 +130,7 @@ class Window(QWidget):
 
 
 def main(folder_path = "../exp1"):
-    det = detectorDrop(f"venv/Lib/site-packages/almavik/exp1")
+    det = detectorDrop(f"exp1")
     app = QApplication(sys.argv)
     window = Window(det)
     window.show()
