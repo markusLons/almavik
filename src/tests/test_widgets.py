@@ -1,6 +1,6 @@
 import pytest
 from PyQt5.QtWidgets import QApplication
-from almavik.widgets import MplCanvas, LineCanvas, ImageCanvas, Table
+from ..widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 
 @pytest.fixture(scope='module')
 def qt_app(request):
