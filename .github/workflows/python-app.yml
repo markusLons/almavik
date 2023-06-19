@@ -2,9 +2,13 @@ name: Python application
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - exe  # Добавлена ветка "exe"
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - exe  # Добавлена ветка "exe"
 
 permissions:
   contents: read
