@@ -47,6 +47,14 @@ jobs:
         pyinstaller --onefile $files
         mkdir -p ../bin
         mv dist/* ../bin
+    - name: Commit and push executable file
+      run: |
+        git config --global user.name "markuslons"
+        git config --global user.email "markuslons@gmail.com"
+        git add bin/executable_file.exe
+        git commit -m "Add executable file"
+        git push
+
     - name: Build Docker image
       run: |
         docker build -t markuslons/almavik:latest .
