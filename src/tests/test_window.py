@@ -14,9 +14,10 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 exp1_dir = os.path.join(current_dir, '../exp1')
 
 @fixture(scope='session')
-def app(request):
-    with QApplication([]) as app:
-        yield app
+def qt_app(request):
+    app = QApplication([])
+    yield app
+    app.quit()
 
 @fixture
 def qtbot(app):
