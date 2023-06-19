@@ -7,13 +7,13 @@ import unittest
 sys.path.insert(1, 'src/')
 from detectorDrop import detectorDrop
 
-exp1_dir = "/home/runner/work/almavik/almavik/exp1"
+img_dir = os.path.abspath('exp1')
 
 class TestDetectorDrop(unittest.TestCase):
 
     def setUp(self):
         # Создаем экземпляр класса detectorDrop
-        self.detector = detectorDrop(exp1_dir)
+        self.detector = detectorDrop(img_dir)
 
     def test_center_mass(self):
         # Проверяем, что center_mass является списком
