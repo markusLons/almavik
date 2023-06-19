@@ -4,7 +4,7 @@ from pytestqt.plugin import QtBot
 from PyQt5.QtCore import Qt
 from PyQt5.QtTest import QTest
 from pytest import fixture
-from almavik.YPPRPO import Window, detectorDrop
+from ..YPPRPO import Window, detectorDrop
 
 import pkg_resources
 
