@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import (
     QTableWidget,
     QSlider,
 )
-from .widgets import LineCanvas, ImageCanvas, Table
+from widgets import LineCanvas, ImageCanvas, Table
 from .detectorDrop import detectorDrop
 
 counter = 0
