@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import sys
 
 sys.path.insert(1, 'src/')
-from src.detectorDrop import detectorDrop
+from detectorDrop import detectorDrop
 
 import pkg_resources
 
