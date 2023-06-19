@@ -1,4 +1,5 @@
 import sys
+import pytest
 from PyQt5.QtWidgets import QApplication
 from pytestqt.plugin import QtBot
 from PyQt5.QtCore import Qt
