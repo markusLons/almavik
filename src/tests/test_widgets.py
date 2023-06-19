@@ -5,6 +5,9 @@ from PyQt5.QtWidgets import QApplication
 from unittest.mock import MagicMock
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
+import os
+os.environ['DISPLAY'] = ':0'
+
 
 class TestImageCanvas(unittest.TestCase):
     def test_load_image(self):
