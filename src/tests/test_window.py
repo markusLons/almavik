@@ -13,6 +13,15 @@ from YPPRPO import Window, detectorDrop
 current_dir = os.path.dirname(os.path.abspath(__file__))
 exp1_dir = os.path.join(current_dir, '../exp1')
 
+@fixture(scope='session')
+def app(request):
+    with QApplication([]) as app:
+        yield app
+
+@fixture
+def qtbot(app):
+    return QtBot(app)
+
 @fixture
 def window(qtbot):
     app = QApplication(sys.argv)
