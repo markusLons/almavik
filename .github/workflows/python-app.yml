@@ -45,8 +45,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.AAA }}
         with:
-          tag_name: ${{ github.run_number }}  # Автоматический тег на основе номера запуска
-          release_name: ${{ github.run_number }}  # Название релиза также на основе номера запуска
+          tag_name: ${{ github.run_number }}
+          release_name: Automatically created successful release
           body: |
             Release windows version
           draft: false
