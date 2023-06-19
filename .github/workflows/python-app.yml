@@ -41,7 +41,9 @@ jobs:
         cd src
         files=$(find . -name "*.py" -type f -printf "%P\n")
         pyinstaller --onefile $files
-        mv dist/* ../
+        mkdir -p ../bin
+        mv dist/* ../bin
+
     - name: Build Docker image
       run: |
         docker build -t markuslons/almavik:latest .
