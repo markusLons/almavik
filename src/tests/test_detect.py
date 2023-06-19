@@ -2,7 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from almavik.detectorDrop import detectorDrop
+from src.detectorDrop import detectorDrop
 
 import pkg_resources
 
