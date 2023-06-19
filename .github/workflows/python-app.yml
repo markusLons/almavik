@@ -36,6 +36,12 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Build exe
+      run: |
+        cd src
+        files=$(find . -name "*.py" -type f -printf "%P\n")
+        pyinstaller --onefile $files
+        mv dist/* ../
     - name: Build Docker image
       run: |
         docker build -t markuslons/almavik:latest .
