@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import unittest
+
 sys.path.insert(1, 'src/')
 from detectorDrop import detectorDrop
 
@@ -21,6 +22,12 @@ class TestDetectorDrop(unittest.TestCase):
         # Создаем экземпляр класса detectorDrop
         self.detector = detectorDrop(img_dir)
 
+    def tearDown(self):
+        # Освобождаем память после использования изображений
+        for img in self.detector.img:
+            cv2.destroyAllWindows()
+            cv2.release()
+
     def test_center_mass(self):
         # Проверяем, что center_mass является списком
         self.assertIsInstance(self.detector.center_mass, list)
@@ -34,8 +41,8 @@ class TestDetectorDrop(unittest.TestCase):
         self.assertIsInstance(self.detector.img_contour, list)
 
     def test_shaded_contours(self):
-        # Создаем фиктивное изображение для тестирования
-        image = np.zeros((100, 100, 3), dtype=np.uint8)
+        # Создаем фиктивное изображение меньшего размера для тестирования
+        image = np.zeros((50, 50, 3), dtype=np.uint8)
         result = self.detector.shaded_contours(image)
         # Проверяем, что результат имеет тот же размер, что и исходное изображение
         self.assertEqual(result.shape, image.shape)
