@@ -1,6 +1,9 @@
 import pytest
 from PyQt5.QtWidgets import QApplication
-from src.widgets import MplCanvas, LineCanvas, ImageCanvas, Table
+import sys
+
+sys.path.insert(1, 'src/')
+from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 
 @pytest.fixture(scope='module')
 def qt_app(request):
