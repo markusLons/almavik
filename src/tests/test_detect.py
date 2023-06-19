@@ -7,8 +7,7 @@ import unittest
 sys.path.insert(1, 'src/')
 from detectorDrop import detectorDrop
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-exp1_dir = os.path.join(current_dir, '../exp1')
+exp1_dir = "/home/runner/work/almavik/almavik/exp1"
 
 class TestDetectorDrop(unittest.TestCase):
 
