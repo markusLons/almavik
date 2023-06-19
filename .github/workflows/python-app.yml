@@ -25,6 +25,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Install PyInstaller
+      run: |
+        pip install pyinstaller
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -33,6 +36,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Set PYTHONPATH
       run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
+    - name: Test with pytest
+      run: |
+        pytest
     - name: Build exe
       run: |
         cd src
