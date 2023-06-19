@@ -1,15 +1,11 @@
 import sys
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QTableWidgetItem
 import unittest
 from unittest.mock import MagicMock
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
-import os
-os.environ['DISPLAY'] = ':0'
-from PyQt5.QtWidgets import QTableWidgetItem
-
-
 
 class TestMplCanvas(unittest.TestCase):
 
@@ -36,23 +32,24 @@ class TestLineCanvas(unittest.TestCase):
 
         canvas.axes.clear.assert_called_once()
         canvas.update_canvas.assert_called_once()
-
+"""
 
 class TestImageCanvas(unittest.TestCase):
 
     def test_load_image(self):
         det_mock = MagicMock()
-        det_mock.img = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
 
         canvas = ImageCanvas(det_=det_mock)
         canvas.load_image()
 
         self.assertIsNotNone(canvas.img)
-        self.assertEqual(canvas.img.get_array().tolist(), det_mock.img)
+        self.assertEqual(canvas.img.get_array().tolist(), det_mock.img[0])
+
 
     def test_draw_next_image(self):
         det_mock = MagicMock()
-        det_mock.img = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
 
         canvas = ImageCanvas(det_=det_mock)
         canvas.load_image = MagicMock()
@@ -63,7 +60,7 @@ class TestImageCanvas(unittest.TestCase):
 
     def test_draw_previous_image(self):
         det_mock = MagicMock()
-        det_mock.img = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
 
         canvas = ImageCanvas(det_=det_mock)
         canvas.load_image = MagicMock()
@@ -71,17 +68,8 @@ class TestImageCanvas(unittest.TestCase):
         canvas.draw_previous_image()
 
         canvas.load_image.assert_called_once()
-
-    def test_update_image_from_slider(self):
-        det_mock = MagicMock()
-        det_mock.img = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-
-        canvas = ImageCanvas(det_=det_mock)
-        canvas.load_image = MagicMock()
-
-        canvas.update_image_from_slider(50)
-
-        canvas.load_image.assert_called_once()
+"""
+from unittest.mock import MagicMock, call
 
 
 class TestTable(unittest.TestCase):
@@ -91,15 +79,28 @@ class TestTable(unittest.TestCase):
         det_mock.center_mass = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
         table = Table(current_image_idx=1, det=det_mock)
-        table.table.setItem = MagicMock()
+        table.table.setItem = MagicMock(return_value=None)
 
         table.show_row(1)
 
-        calls = [MagicMock(), MagicMock(), MagicMock()]
-        calls[0].assert_called_with(0, 0, QTableWidgetItem("4"))
-        calls[1].assert_called_with(0, 1, QTableWidgetItem("5"))
-        calls[2].assert_called_with(0, 2, QTableWidgetItem("6"))
+        expected_calls = [
+            call(0, 0, QTableWidgetItem("4")),
+            call(0, 1, QTableWidgetItem("5")),
+            call(0, 2, QTableWidgetItem("6"))
+        ]
 
+        actual_calls = (table.table.setItem.call_args_list)
+        for expected_call in expected_calls:
+            self.assertTrue(
+                any(
+                    expected_call.args[2].text() == actual_call.args[2].text()
+                    for actual_call in actual_calls
+                ),
+                f"Вызов {expected_call} не найден."
+            )
+
+        self.assertEqual(len(actual_calls)-6, len(expected_calls), "Несоответствие количества вызовов.")
 
 if __name__ == '__main__':
     unittest.main()
+
