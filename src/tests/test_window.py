@@ -4,7 +4,7 @@ from pytestqt.plugin import QtBot
 from PyQt5.QtCore import Qt
 from PyQt5.QtTest import QTest
 from pytest import fixture
-import sys
+import os
 
 sys.path.insert(1, 'src/')
 from YPPRPO import Window, detectorDrop
