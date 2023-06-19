@@ -7,7 +7,13 @@ import unittest
 sys.path.insert(1, 'src/')
 from detectorDrop import detectorDrop
 
-img_dir = os.path.abspath('exp1')
+import os
+
+# Получаем текущую директорию (папку, в которой находится этот файл)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Путь к папке с изображениями относительно корневой папки проекта
+img_dir = os.path.join(current_dir, '../../exp1')
 
 class TestDetectorDrop(unittest.TestCase):
 
