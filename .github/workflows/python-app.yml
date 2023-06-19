@@ -47,7 +47,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Push Docker image to Docker Hub
         run: |
-          docker push markuslons/almavik:latest
+          docker push markuslons/almavik:${{ github.run_number }}
 
   build-windows:
     runs-on: windows-2019
