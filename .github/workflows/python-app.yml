@@ -43,7 +43,6 @@ jobs:
         pyinstaller --onefile $files
         mkdir -p ../bin
         mv dist/* ../bin
-
     - name: Build Docker image
       run: |
         docker build -t markuslons/almavik:latest .
