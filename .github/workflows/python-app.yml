@@ -39,19 +39,14 @@ jobs:
       - name: Run PyInstaller
         run: |
           python -m PyInstaller -w --onefile src/YPPRPO.py --name "almavik"
-      - name: Upload Release Asset
-        uses: actions/upload-artifact@v2
-        with:
-          name: almavik
-          path: "dist/almavik.exe"
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.AAA }}
         with:
-          tag_name: "3"
-          release_name: "2"
+          tag_name: ${{ github.run_number }}  # Автоматический тег на основе номера запуска
+          release_name: ${{ github.run_number }}  # Название релиза также на основе номера запуска
           body: |
             Release windows version
           draft: false
