@@ -94,3 +94,6 @@ def test_previous_image(window, qtbot):
     qtbot.mouseClick(button1, Qt.LeftButton)
     qtbot.wait(2000)  # Wait for the image to load or update
     assert imgCanvas.current_image_idx == initial_image - 1
+
+if __name__ == '__main__':
+    pytest.main()
