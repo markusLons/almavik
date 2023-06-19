@@ -7,12 +7,13 @@ import sys
 sys.path.insert(1, 'src/')
 from detectorDrop import detectorDrop
 
-import pkg_resources
+current_dir = os.path.dirname(os.path.abspath(__file__))
+exp1_dir = os.path.join(current_dir, '../exp1')
 
-file_path = pkg_resources.resource_filename("almavik", "exp1")
+# Теперь вы можете использовать переменную exp1_dir для обращения к папке exp1
 
 # Путь к тестовым изображениям
-TEST_IMAGE_DIR = file_path
+TEST_IMAGE_DIR = exp1_dir
 
 def test_shaded_contours():
     # Создаем объект класса detectorDrop
