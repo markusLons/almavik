@@ -123,11 +123,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install wheel
-      - name: Update version in setup.py
-        run: |
-          sed -i "s/version = '.*'/version = '$(date +'%Y.%m.%d')'/g" setup.py
-          git add setup.py
-          git commit -m "Update version in setup.py"
+
       - name: Build package
         run: python setup.py sdist bdist_wheel
       - name: Publish to PyPI
