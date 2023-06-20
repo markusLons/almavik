@@ -1,4 +1,4 @@
-"""
+
 import os
 import cv2
 import numpy as np
@@ -70,7 +70,7 @@ class TestDetectorDrop(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-    """
+
 
 import unittest
 
@@ -88,5 +88,8 @@ class AlwaysPassingTests(unittest.TestCase):
         # Утверждение, которое всегда будет истинным
         self.assertTrue(len("Hello, World!") == 13)
 
-if __name__ == '__main__':
+def run_tests():
     unittest.main()
+
+if __name__ == '__main__':
+    run_tests()
