@@ -123,7 +123,9 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install wheel
-
+      - name: Update version
+        run: |
+          python setup.py install --version "${{ github.run_number }}"
       - name: Build package
         run: python setup.py sdist bdist_wheel
       - name: Publish to PyPI
