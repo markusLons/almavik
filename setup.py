@@ -10,7 +10,7 @@ setup(
     url='https://github.com/markusLons/almavik',
     author='Markus.Alinas.Viktorias',
     author_email='v.tikhonova@g.nsu.ru',
-    packages=['almavik', 'almavik.exp1'],
+    packages=['src', 'exp1'],
     package_data={'almavik.exp1': ['*.jpeg']},
     install_requires=[
         'opencv-python',
