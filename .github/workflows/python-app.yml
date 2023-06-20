@@ -37,9 +37,9 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Set PYTHONPATH
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
-      - name: Test with pytest
+      - name: Run Test's
         run: |
-          pytest
+          python src/test/test_main.py
 
   test-windows:
     runs-on: windows-2019
@@ -63,10 +63,9 @@ jobs:
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
+      - name: Run Test's
         run: |
-          pytest
-
+          python src/test/test_main.py
 
   build:
     runs-on: ubuntu-latest
@@ -93,9 +92,9 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Set PYTHONPATH
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
-      - name: Test with pytest
+      - name: Run Test's
         run: |
-          pytest
+          python src/test/test_main.py
       - name: Build Docker image
         run: |
           docker build -t markuslons/almavik:${{ github.run_number }} .
