@@ -49,7 +49,7 @@
     <tr>
       <td align="center">
         <a href="https://github.com/markusLons">
-          <img src="formalization/markus.jpg" style="max-width: 100%;" alt="Markus">
+          <img src="formalization/markus.jpg" width="200px" alt="Markus">
         </a>
         <br />
         <sub><b>Markus</b></sub>
@@ -71,7 +71,6 @@
     </tr>
   </table>
 </div>
-
 
 ## Ссылки
 https://pypi.org/project/almavik/
