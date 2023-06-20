@@ -138,7 +138,7 @@ jobs:
           pip install wheel
       - name: Update version
         run: |
-          PACKAGE_VERSION="${{ github.run_number }}"
+          echo "${{ github.run_number }}" > version.txt
           python setup.py install
         env:
           PACKAGE_VERSION: ${{ github.run_number }}
