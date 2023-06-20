@@ -43,7 +43,7 @@ jobs:
       - name: Generate coverage report
         run: |
           coverage report
-          coverage html
+          coverage html --directory=htmlcov
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
@@ -78,7 +78,7 @@ jobs:
       - name: Generate coverage report
         run: |
           coverage report
-          coverage html
+          coverage html --directory=htmlcov
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
