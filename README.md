@@ -37,6 +37,9 @@
     $ docker run -it markuslons/almavik
 ### Запуск через pip
 Тут типо вика 
+| Markus        | Blubbery      | Viktoriatix   |
+| ------------- | ------------- | ------------- |
+| ![Markus](formalization/markus.jpg)  | ![Blubbery](formalization/blubbery.jpg) | ![Viktoriatix](formalization/viktoriatix.jpg) |
 
 
 ## Ссылки
