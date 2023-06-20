@@ -48,21 +48,21 @@
   <table>
     <tr>
       <td align="center">
-        <a href="ссылка/на/маркус">
+        <a href="https://github.com/markusLons">
           <img src="formalization/markus.jpg" width="200px" alt="Markus">
         </a>
         <br />
         <sub><b>Markus</b></sub>
       </td>
       <td align="center">
-        <a href="ссылка/на/blubbery">
+        <a href="https://github.com/avdovichenko1">
           <img src="formalization/blubbery.jpg" width="200px" alt="Blubbery">
         </a>
         <br />
         <sub><b>Blubbery</b></sub>
       </td>
       <td align="center">
-        <a href="ссылка/на/viktoriatix">
+        <a href="https://github.com/ViktoriaTix">
           <img src="formalization/viktoriatix.jpg" width="200px" alt="Viktoriatix">
         </a>
         <br />
