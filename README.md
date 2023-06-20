@@ -4,7 +4,7 @@
 <br>
 <div>
     <a href="https://hub.docker.com/repository/docker/markuslons/almavik"><img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Pulls"></a>
-   <a href="https://pypi.org/project/almavik/"><img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/pypi_icon_132062.png" alt="PyPi Pulls"></a>
+   <a href="https://pypi.org/project/almavik/"><img src="https://cdn.icon-icons.com/icons2/2389/PNG/512/pypi_logo_icon_144959.png" alt="PyPi Pulls"></a>
    
   </div>
   <br>
