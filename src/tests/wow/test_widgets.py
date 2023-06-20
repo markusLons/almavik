@@ -83,6 +83,8 @@ class TestTable(unittest.TestCase):
         self.assertEqual(len(actual_calls)-6, len(expected_calls), "Несоответствие количества вызовов.")
 
 
-if __name__ == '__main__':
+def run_tests():
     unittest.main()
 
+if __name__ == '__main__':
+    run_tests()
