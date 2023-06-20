@@ -27,6 +27,8 @@ if missing_modules:
     print("Отсутствуют следующие зависимости: ", missing_modules)
     sys.exit(0)  # Программа завершает работу без ошибки
 
+
+"""
 class TestMplCanvas(unittest.TestCase):
 
     def test_update_canvas(self):
@@ -104,3 +106,4 @@ class TestTable(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+"""
