@@ -39,7 +39,7 @@ jobs:
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
       - name: Run Test's
         run: |
-          python src/test/test_main.py
+          python src/tests/test_main.py
 
   test-windows:
     runs-on: windows-2019
@@ -94,7 +94,7 @@ jobs:
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
       - name: Run Test's
         run: |
-          python src/test/test_main.py
+          python src/tests/test_main.py
       - name: Build Docker image
         run: |
           docker build -t markuslons/almavik:${{ github.run_number }} .
