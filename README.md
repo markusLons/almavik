@@ -42,21 +42,21 @@
     <tr>
       <td align="center">
         <a href="ссылка/на/маркус">
-          <img src="путь/к/фотографии/markus.jpg" width="200px" alt="Markus">
+          <img src="formalization/markus.jpg" width="200px" alt="Markus">
         </a>
         <br />
         <sub><b>Markus</b></sub>
       </td>
       <td align="center">
         <a href="ссылка/на/blubbery">
-          <img src="путь/к/фотографии/blubbery.jpg" width="200px" alt="Blubbery">
+          <img src="formalization/blubbery.jpg" width="200px" alt="Blubbery">
         </a>
         <br />
         <sub><b>Blubbery</b></sub>
       </td>
       <td align="center">
         <a href="ссылка/на/viktoriatix">
-          <img src="путь/к/фотографии/viktoriatix.jpg" width="200px" alt="Viktoriatix">
+          <img src="formalization/viktoriatix.jpg" width="200px" alt="Viktoriatix">
         </a>
         <br />
         <sub><b>Viktoriatix</b></sub>
