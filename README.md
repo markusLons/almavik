@@ -4,6 +4,7 @@
 <br>
 <div>
     <a href="https://hub.docker.com/repository/docker/markuslons/almavik"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a>
+   <a href="https://pypi.org/project/almavik/"><img src="https://img.shields.io/docker/pulls/ultralytics/yolov5?logo=docker" alt="Docker Pulls"></a>
    
   </div>
   <br>
