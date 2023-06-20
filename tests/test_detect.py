@@ -7,3 +7,4 @@ def test_detectorDrop_lists_length():
     detector = detectorDrop(images_folder)
 
     assert len(detector.center_mass) == len(detector.img) == len(detector.img_contour) == 401
+

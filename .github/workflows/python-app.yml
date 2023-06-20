@@ -37,6 +37,9 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Set PYTHONPATH
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
+      - name: Test with pytest
+        run: |
+          pytest
       - name: Build Docker image
         run: |
           docker build -t markuslons/almavik:${{ github.run_number }} .
