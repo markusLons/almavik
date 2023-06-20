@@ -1,12 +1,12 @@
 from setuptools import setup
 from io import open
-import os
+import sys
 
-run_number = os.getenv("github.run_number", "4")
+version = sys.argv[1]
 
 setup(
     name='almavik',
-    version=run_number,
+    version=version,
     description='Determination of the drop trajectory',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
