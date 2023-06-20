@@ -1,8 +1,8 @@
 from setuptools import setup
 from io import open
-import sys
+import os
 
-version = sys.argv[1]
+version = os.getenv('PACKAGE_VERSION')
 
 setup(
     name='almavik',
