@@ -39,8 +39,14 @@ jobs:
       - name: Set PYTHONPATH
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
       - name: Run Test's
-        run: |
-          python src/tests/test_main.py
+        run: coverage run --source=src src/tests/test_main.py
+      - name: Generate coverage report
+        run: coverage report
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: htmlcov
 
   test-windows:
     runs-on: windows-2019
@@ -66,8 +72,14 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run Test's
-        run: |
-          python src/tests/test_main.py
+        run: coverage run --source=src src/tests/test_main.py
+      - name: Generate coverage report
+        run: coverage report
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: htmlcov
 
   build:
     runs-on: ubuntu-latest
