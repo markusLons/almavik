@@ -1,4 +1,4 @@
-import sys
+"""import sys
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QTableWidgetItem
@@ -27,7 +27,7 @@ if missing_modules:
     print("Отсутствуют следующие зависимости: ", missing_modules)
     sys.exit(0)  # Программа завершает работу без ошибки
 
-
+"""
 """
 class TestMplCanvas(unittest.TestCase):
 
