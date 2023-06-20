@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV DISPLAY=host.docker.internal:0
 WORKDIR /app/src
 # Запуск PyQt приложения
-CMD ["python", "YPPRPO.py"]
+CMD ["python", "detectorDrop.py"]

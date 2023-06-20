@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 class detectorDrop:
     # Initialize class variables
     center_mass = []  # Stores the center of mass for each image
@@ -127,3 +128,5 @@ class detectorDrop:
 
             # plt.imshow(new_img)
             # plt.show()
+if __name__ == "__main__":
+    detect = detectorDrop("../exp1")
