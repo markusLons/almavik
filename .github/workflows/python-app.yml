@@ -41,7 +41,10 @@ jobs:
       - name: Run Test's
         run: coverage run --source=src src/tests/test_main.py
       - name: Generate coverage report
-        run: coverage report
+        run: |
+          coverage run --source=src src/tests/test_main.py
+          coverage report
+          coverage html
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
@@ -74,7 +77,10 @@ jobs:
       - name: Run Test's
         run: coverage run --source=src src/tests/test_main.py
       - name: Generate coverage report
-        run: coverage report
+        run: |
+          coverage run --source=src src/tests/test_main.py
+          coverage report
+          coverage html
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         with:
