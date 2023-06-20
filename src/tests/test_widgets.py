@@ -8,7 +8,7 @@ from unittest.mock import MagicMock
 try:
     sys.path.insert(1, 'src/')
     from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
-except ProcessExitedWithError as e:
+except SystemExit as e:
     if e.exit_code == 134:
         print("Несовместимость зависимостей")
     else:
