@@ -4,9 +4,8 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QTableWidgetItem
 import unittest
 from unittest.mock import MagicMock
-
-import sys
-
+sys.path.insert(1, 'src/')
+from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 required_modules = [
     'PyQt5.QtCore',
     'PyQt5.QtGui',
@@ -14,7 +13,6 @@ required_modules = [
     'PyQt5.QtTest',
     'numpy',
     'matplotlib',
-    # Добавьте остальные требуемые модули
 ]
 
 missing_modules = []
@@ -28,9 +26,6 @@ for module in required_modules:
 if missing_modules:
     print("Отсутствуют следующие зависимости: ", missing_modules)
     sys.exit(0)  # Программа завершает работу без ошибки
-
-# Продолжайте выполнение программы здесь, так как все зависимости доступны
-
 
 class TestMplCanvas(unittest.TestCase):
 
