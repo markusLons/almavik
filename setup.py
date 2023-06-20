@@ -1,6 +1,7 @@
 from setuptools import setup
 from io import open
 
+
 setup(
     name='almavik',
     version='4.0',
