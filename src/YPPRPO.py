@@ -17,11 +17,12 @@ from detectorDrop import detectorDrop
 
 counter = 0
 
+
 class Window(QWidget):
     def __init__(self, det):
         """
         Initialize the main window of the application.
-        
+
         Args:
             det (detectorDrop): The detectorDrop object containing the data.
         """
@@ -129,13 +130,13 @@ class Window(QWidget):
         self.setLayout(layout)
 
 
-def main(folder_path = "../exp1"):
+def main(folder_path="../exp1"):
     det = detectorDrop(f"exp1")
     app = QApplication(sys.argv)
     window = Window(det)
     window.show()
     sys.exit(app.exec_())
 
+
 if __name__ == "__main__":
     main()
-
