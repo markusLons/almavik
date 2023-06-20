@@ -2,11 +2,15 @@ from setuptools import setup
 from io import open
 import os
 
-version = os.getenv('PACKAGE_VERSION')
+def get_version():
+    version_file = os.path.join(os.path.dirname(__file__), 'version.txt')
+    with open(version_file, 'r', encoding='utf-8') as f:
+        version = f.read().strip()
+    return version
 
 setup(
     name='almavik',
-    version=version,
+    version=get_version(),
     description='Determination of the drop trajectory',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
