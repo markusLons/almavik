@@ -37,9 +37,33 @@
     $ docker run -it markuslons/almavik
 ### Запуск через pip
 Тут типо вика 
-| Markus        | Blubbery      | Viktoriatix   |
-| ------------- | ------------- | ------------- |
-| ![Markus](formalization/markus.jpg)  | ![Blubbery](formalization/blubbery.jpg) | ![Viktoriatix](formalization/viktoriatix.jpg) |
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="ссылка/на/маркус">
+          <img src="путь/к/фотографии/markus.jpg" width="200px" alt="Markus">
+        </a>
+        <br />
+        <sub><b>Markus</b></sub>
+      </td>
+      <td align="center">
+        <a href="ссылка/на/blubbery">
+          <img src="путь/к/фотографии/blubbery.jpg" width="200px" alt="Blubbery">
+        </a>
+        <br />
+        <sub><b>Blubbery</b></sub>
+      </td>
+      <td align="center">
+        <a href="ссылка/на/viktoriatix">
+          <img src="путь/к/фотографии/viktoriatix.jpg" width="200px" alt="Viktoriatix">
+        </a>
+        <br />
+        <sub><b>Viktoriatix</b></sub>
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 ## Ссылки
