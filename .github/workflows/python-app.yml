@@ -125,7 +125,10 @@ jobs:
           pip install wheel
       - name: Update version
         run: |
-          python setup.py install --version "${{ github.run_number }}"
+          PACKAGE_VERSION="${{ github.run_number }}"
+          python setup.py install
+        env:
+          PACKAGE_VERSION: ${{ github.run_number }}
       - name: Build package
         run: python setup.py sdist bdist_wheel
       - name: Publish to PyPI
