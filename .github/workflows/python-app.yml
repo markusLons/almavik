@@ -65,7 +65,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run Test's
         run: |
-          python src\test\test_main.py
+          python src/tests/test_main.py
 
   build:
     runs-on: ubuntu-latest
