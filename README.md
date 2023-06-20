@@ -69,7 +69,7 @@
           <img src="formalization/viktoriatix.jpg" width="200px" alt="ViktoriaTix">
         </a>
         <br />
-        <sub><b>Viktoriatix</b></sub>
+        <sub><b>ViktoriaTix</b></sub>
       </td>
     </tr>
   </table>
