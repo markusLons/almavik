@@ -18,7 +18,4 @@ setup(
         'PyQt5',
         'matplotlib',
     ],
-    classifiers=[
-        "Development Status :: 3 - Alpha",
-    ]
 )
