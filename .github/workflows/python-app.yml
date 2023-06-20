@@ -116,19 +116,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
-
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install wheel
+      - name: Update version in setup.py
+        run: |
+          sed -i "s/version = '.*'/version = '$(date +'%Y.%m.%d')'/g" setup.py
+          git add setup.py
+          git commit -m "Update version in setup.py"
       - name: Build package
         run: python setup.py sdist bdist_wheel
-
       - name: Publish to PyPI
         run: |
           python -m pip install --upgrade pip
