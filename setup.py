@@ -2,10 +2,9 @@ from setuptools import setup
 from io import open
 import datetime
 # Генерируем номер версии на основе текущего времени
-version = datetime.datetime.now().strftime('%Y.%m.%d.%H%M')
 
 setup(
-    name='almavik',
+    name="4.2",
     version=version,
     description='Determination of the drop trajectory',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
