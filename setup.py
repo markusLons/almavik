@@ -3,7 +3,7 @@ from io import open
 
 setup(
     name='almavik',
-    version='3.9',
+    version='4.0',
     description='Determination of the drop trajectory',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
