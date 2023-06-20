@@ -1,5 +1,5 @@
 import pytest
-from ..src.detectorDrop import detectorDrop
+from almavik.src.detectorDrop import detectorDrop
 
 def test_detectorDrop_lists_length():
     images_folder = "./exp1"
