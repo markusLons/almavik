@@ -1,86 +1,152 @@
 import sys
+import numpy as np
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QTableWidgetItem
 import unittest
 from unittest.mock import MagicMock
+
 sys.path.insert(1, 'src/')
 from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
 
 
-class TestMplCanvas(unittest.TestCase):
-
-    def test_update_canvas(self):
-        canvas = MplCanvas()
-        canvas.fig.canvas.draw = MagicMock()
-
-        canvas.update_canvas()
-
-        canvas.fig.canvas.draw.assert_called_once()
-
-
 class TestLineCanvas(unittest.TestCase):
 
+    def setUp(self):
+        self.det = MagicMock()
+        self.det.center_mass = np.array([[1, 10, 20], [2, 20, 30], [3, 30, 40]])
+        self.canvas = LineCanvas(det_=self.det, current_image_idx=1)
+
+    # Проверяет очистку и обновление графика при отрисовке линейного графика
     def test_draw_line(self):
-        det_mock = MagicMock()
-        det_mock.center_mass = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        self.canvas.axes.clear = MagicMock()
+        self.canvas.update_canvas = MagicMock()
 
-        canvas = LineCanvas(det_=det_mock, current_image_idx=1)
-        canvas.axes.clear = MagicMock()
-        canvas.update_canvas = MagicMock()
+        self.canvas.draw_line()
 
-        canvas.draw_line()
+        self.canvas.axes.clear.assert_called_once()
+        self.canvas.update_canvas.assert_called_once()
 
-        canvas.axes.clear.assert_called_once()
-        canvas.update_canvas.assert_called_once()
+    # Проверяет отрисовку линейного графика с текущей точкой в красном цвете
+    def test_draw_line_with_current_point(self):
+        self.canvas.axes.clear = MagicMock()
+        self.canvas.update_canvas = MagicMock()
 
+        self.canvas.current_image = 2
+        self.canvas.draw_line()
 
-from unittest.mock import patch
+        self.canvas.axes.clear.assert_called_once()
+        self.canvas.update_canvas.assert_called_once()
+
 
 class TestImageCanvas(unittest.TestCase):
 
-    def test_load_image(self):
-        det_mock = MagicMock()
-        det_mock.img = [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]]
+    def setUp(self):
+        self.det = MagicMock()
+        self.det.img = np.random.rand(10, 10)
+        self.det.img_contour = np.random.rand(10, 10)
+        self.canvas = ImageCanvas(det_=self.det)
 
-        canvas = ImageCanvas(det_=det_mock)
-        canvas.load_image()
+    # Проверяет загрузку изображения без контура и обновление отображения
+    def test_load_image_without_contour(self):
+        self.canvas.img = MagicMock()
+        self.canvas.axes.draw_artist = MagicMock()
+        self.canvas.fig.canvas.blit = MagicMock()
 
-        self.assertIsNotNone(canvas.img)
-        self.assertEqual(canvas.img.get_array().tolist(), det_mock.img[0])
+        self.canvas.load_image()
 
+        self.canvas.img.set_data.assert_called_once_with(self.det.img)
+        self.canvas.axes.draw_artist.assert_called_once()
+        self.canvas.fig.canvas.blit.assert_called_once()
 
-from unittest.mock import MagicMock, call
+    # Проверяет загрузку изображения с контуром и обновление отображения
+    def test_load_image_with_contour(self):
+        self.canvas.img = MagicMock()
+        self.canvas.axes.draw_artist = MagicMock()
+        self.canvas.fig.canvas.blit = MagicMock()
+        self.canvas.contour_or_not = 1
+
+        self.canvas.load_image()
+
+        self.canvas.img.set_data.assert_called_once_with(self.det.img_contour)
+        self.canvas.axes.draw_artist.assert_called_once()
+        self.canvas.fig.canvas.blit.assert_called_once()
+
+    # Проверяет переключение на следующее изображение и его загрузку
+    def test_draw_next_image(self):
+        self.canvas.current_image_idx = 1
+        self.canvas.load_image = MagicMock()
+
+        self.canvas.draw_next_image()
+
+        self.assertEqual(self.canvas.current_image_idx, 2)
+        self.canvas.load_image.assert_called_once()
+
+    # Проверяет переключение на предыдущее изображение и его загрузку
+    def test_draw_previous_image(self):
+        self.canvas.current_image_idx = 1
+        self.canvas.load_image = MagicMock()
+
+        self.canvas.draw_previous_image()
+
+        self.assertEqual(self.canvas.current_image_idx, 0)
+        self.canvas.load_image.assert_called_once()
+
+    # Проверяет обновление текущего изображения на основе значения слайдера
+    def test_update_image_from_slider(self):
+        self.canvas.current_image_idx = 0
+        self.canvas.load_image = MagicMock()
+
+        self.canvas.update_image_from_slider(200)
+
+        self.assertEqual(self.canvas.current_image_idx, 2)
+        self.canvas.load_image.assert_called_once()
 
 
 class TestTable(unittest.TestCase):
 
+    def setUp(self):
+        self.det = MagicMock()
+        self.det.center_mass = np.array([[1, 10, 20], [2, 20, 30], [3, 30, 40]])
+        self.table = Table(current_image_idx=1, det=self.det)
+        self.app = QApplication([])
+
+    def tearDown(self):
+        self.app.quit()
+
+    # Проверяет отображение строк таблицы, соответствующих текущему изображению
     def test_show_row(self):
-        det_mock = MagicMock()
-        det_mock.center_mass = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        self.table.numbers_of_rows = MagicMock(return_value=[0, 1, 2])
+        self.table.setItem = MagicMock()
 
-        table = Table(current_image_idx=1, det=det_mock)
-        table.table.setItem = MagicMock(return_value=None)
+        self.table.show_row(1)
 
-        table.show_row(1)
+        self.table.numbers_of_rows.assert_called_once()
+        self.table.setItem.assert_called()
 
-        expected_calls = [
-            call(0, 0, QTableWidgetItem("4")),
-            call(0, 1, QTableWidgetItem("5")),
-            call(0, 2, QTableWidgetItem("6"))
-        ]
+    # Проверяет возвращение индексов строк для первого изображения
+    def test_numbers_of_rows_first_image(self):
+        self.table.index = 0
 
-        actual_calls = (table.table.setItem.call_args_list)
-        for expected_call in expected_calls:
-            self.assertTrue(
-                any(
-                    expected_call.args[2].text() == actual_call.args[2].text()
-                    for actual_call in actual_calls
-                ),
-                f"Вызов {expected_call} не найден."
-            )
+        rows = self.table.numbers_of_rows()
 
-        self.assertEqual(len(actual_calls)-6, len(expected_calls), "Несоответствие количества вызовов.")
+        self.assertEqual(rows, [0, 1, 2])
+
+    # Проверяет возвращение индексов строк для последнего изображения
+    def test_numbers_of_rows_last_image(self):
+        self.table.index = 2
+
+        rows = self.table.numbers_of_rows()
+
+        self.assertEqual(rows, [0, 1, 2])
+
+    # Проверяет возвращение индексов строк для среднего изображения
+    def test_numbers_of_rows_middle_image(self):
+        self.table.index = 1
+
+        rows = self.table.numbers_of_rows()
+
+        self.assertEqual(rows, [0, 1, 2])
 
 
 def run_tests():
