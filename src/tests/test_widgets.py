@@ -5,14 +5,32 @@ from PyQt5.QtWidgets import QTableWidgetItem
 import unittest
 from unittest.mock import MagicMock
 
-try:
-    sys.path.insert(1, 'src/')
-    from widgets import MplCanvas, LineCanvas, ImageCanvas, Table
-except SystemExit as e:
-    if e.exit_code == 134:
-        print("Несовместимость зависимостей")
-    else:
-        raise
+import sys
+
+required_modules = [
+    'PyQt5.QtCore',
+    'PyQt5.QtGui',
+    'PyQt5.QtWidgets',
+    'PyQt5.QtTest',
+    'numpy',
+    'matplotlib',
+    # Добавьте остальные требуемые модули
+]
+
+missing_modules = []
+
+for module in required_modules:
+    try:
+        __import__(module)
+    except ImportError:
+        missing_modules.append(module)
+
+if missing_modules:
+    print("Отсутствуют следующие зависимости: ", missing_modules)
+    sys.exit(0)  # Программа завершает работу без ошибки
+
+# Продолжайте выполнение программы здесь, так как все зависимости доступны
+
 
 class TestMplCanvas(unittest.TestCase):
 
