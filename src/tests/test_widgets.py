@@ -82,7 +82,8 @@ class TestTable(unittest.TestCase):
 
         self.assertEqual(len(actual_calls)-6, len(expected_calls), "Несоответствие количества вызовов.")
 
+
 if __name__ == '__main__':
+    if sys.version_info[0] != 3 or sys.version_info[1] != 9:
+        print("Версия Python отличается от 3.9. Продолжение работы программы...")
     unittest.main()
-
-
