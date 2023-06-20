@@ -76,7 +76,8 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Run PyInstaller
         run: |
-          python -m PyInstaller -w --onefile src/YPPRPO.py --name "almavik"
+          cd src
+          python -m PyInstaller -w --onefile YPPRPO.py --name "almavik"
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
