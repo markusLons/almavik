@@ -1,11 +1,9 @@
 from setuptools import setup
 from io import open
-import datetime
-# Генерируем номер версии на основе текущего времени
 
 setup(
-    name="4.2",
-    version=version,
+    name='almavik',
+    version='4.2',
     description='Determination of the drop trajectory',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
