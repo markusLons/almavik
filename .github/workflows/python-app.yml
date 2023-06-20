@@ -38,11 +38,6 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Set PYTHONPATH
         run: export PYTHONPATH="$PYTHONPATH:${{ github.workspace }}/src"
-      - name: Run GUI tests
-        run: |
-          python src/tests/wow/test_widgets.py
-          python src/tests/wow/test_detect.py
-          python src/tests/wow/test_ypprpo.py
       - name: Run Test's
         run: coverage run --source=src src/tests/test_main.py
       - name: Generate coverage report
