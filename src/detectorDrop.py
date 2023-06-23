@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 
 
@@ -57,11 +58,10 @@ class detectorDrop:
 
     def __init__(self, img_path):
         """
-        Initializes the detectorDrop class with the given image path.
+        Initializes the DetectorDrop class with the given image path.
 
         Args:
             img_path: The path to the directory containing the input images.
-
         """
         MIN_AREA = 7000
         MAX_AREA = 25000
@@ -73,6 +73,7 @@ class detectorDrop:
                 list_photos.append(cv2.imread(os.path.join(img_path, file_name), cv2.IMREAD_COLOR))
 
         number_photo = 0
+        total_photos = len(list_photos)
         for img in list_photos:
             # Convert the image to grayscale
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -119,14 +120,26 @@ class detectorDrop:
             else:
                 cX, cY = 0, 0
 
-            # Store the center of mass
-            self.center_mass.append((number_photo, cX, cY))
+            # Update the progress bar
+            progress = (number_photo + 1) / total_photos
+            self.update_progress_bar(progress)
+
             number_photo += 1
             self.img.append(img)
             self.img_contour.append(new_img)
-            print("Center of mass: ({}, {})".format(cX, cY))
 
-            # plt.imshow(new_img)
-            # plt.show()
+    def update_progress_bar(self, progress):
+        """
+        Updates the progress bar in the terminal.
+
+        Args:
+            progress: A float value between 0 and 1 indicating the progress.
+        """
+        bar_length = 40
+        filled_length = int(round(bar_length * progress))
+        bar = '█' * filled_length + '-' * (bar_length - filled_length)
+        percentage = round(progress * 100, 1)
+        sys.stdout.write('\rProgress: |%s| %s%% Complete' % (bar, percentage))
+        sys.stdout.flush()
 if __name__ == "__main__":
     detect = detectorDrop("../exp1")
