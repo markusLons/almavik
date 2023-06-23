@@ -57,8 +57,8 @@ class LineCanvas(MplCanvas):
         """
         self.axes.clear()
 
-        start_idx = max(self.current_image - 5, 0)
-        end_idx = min(self.current_image + 5, len(self.data))
+        start_idx = 0
+        end_idx = len(self.data)
 
         data_to_plot = self.data[start_idx:end_idx]
         x_data = [row[1] for row in data_to_plot]
