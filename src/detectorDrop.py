@@ -122,7 +122,8 @@ class detectorDrop:
 
             # Update the progress bar
             progress = (number_photo + 1) / total_photos
-            self.update_progress_bar(progress)
+            if sys.stdout.isatty():
+                self.update_progress_bar(progress)
 
             number_photo += 1
             self.img.append(img)
