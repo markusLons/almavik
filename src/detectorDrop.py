@@ -122,8 +122,10 @@ class detectorDrop:
 
             # Update the progress bar
             progress = (number_photo + 1) / total_photos
-            if sys.stdout is not None or sys.stdout.isatty():
+            try:
                 self.update_progress_bar(progress)
+            except Exception as e:
+                print(f"An error occurred while updating the progress bar: {e}")
             self.center_mass.append((number_photo, cX, cY))
 
             number_photo += 1
