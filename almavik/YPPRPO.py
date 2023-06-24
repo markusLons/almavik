@@ -12,8 +12,8 @@ from PyQt5.QtWidgets import (
     QTableWidget,
     QSlider,
 )
-from .widgets import LineCanvas, ImageCanvas, Table
-from .detectorDrop import detectorDrop
+from almavik.widgets import LineCanvas, ImageCanvas, Table
+from almavik.detectorDrop import detectorDrop
 
 counter = 0
 
@@ -129,10 +129,8 @@ class Window(QWidget):
 
         self.setLayout(layout)
 
-import pkg_resources
-folder_path = pkg_resources.resource_filename("almavik", "exp1")
-def main():
-    det = detectorDrop(folder_path)
+def main(folder_path="../exp1"):
+    det = detectorDrop(f"exp1")
     app = QApplication(sys.argv)
     window = Window(det)
     window.show()
